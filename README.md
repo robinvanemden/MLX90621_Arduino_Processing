@@ -4,7 +4,7 @@ Arduino and Processing code for the MLX90621 16x4 thermopile array.
 
 In use in VU and Tilburg University temperature [cry detection project](http://www.pavlov.io/2015/07/01/detecting-crying-eyes/).
 
-Makes use MaxBot's MLX90621 [Arduino library](http://forum.arduino.cc/index.php?topic=126244.0) patched with KMoto's [minor change] in defaultConfig_H (http://forum.arduino.cc/index.php?topic=126244.msg2307588#msg2307588).
+Makes use MaxBot's MLX90621 [Arduino library](http://forum.arduino.cc/index.php?topic=126244.0) patched with KMoto's [minor change](http://forum.arduino.cc/index.php?topic=126244.msg2307588#msg2307588) in defaultConfig_H.
 
 #####Screenshot
 
