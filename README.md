@@ -1,4 +1,4 @@
-### MLX90621 Arduino class and Processing example code
+### MLX90621 Arduino and Processing example code
 
 Arduino and Processing code for the MLX90621 16x4 thermopile array.
 
