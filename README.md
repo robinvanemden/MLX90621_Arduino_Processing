@@ -1,6 +1,6 @@
 ### MLX90621 Arduino and Processing example code
 
-Arduino and Processing code for the MLX90621 16x4 thermopile array.
+Arduino and Processing code for the Melexis [MLX90621](http://www.melexis.com/Infrared-Thermometer-Sensors/Infrared-Thermometer-Sensors/Low-noise-high-speed-16x4-Far-Infrared-array-823.aspx) 16x4 thermopile array.
 
 In use in VU and Tilburg University temperature [cry detection project](http://www.pavlov.io/2015/07/01/detecting-crying-eyes/).
 
