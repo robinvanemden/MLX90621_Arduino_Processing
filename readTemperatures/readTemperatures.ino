@@ -30,7 +30,7 @@ MLX90621 sensor; // create an instance of the Sensor class
 void setup(){ 
   Serial.begin(115200);
   Serial.println("trying to initialize sensor...");
-  sensor.initialise (8); // start the thermo cam with 8 frames per second
+  sensor.initialise (16); // start the thermo cam with 16 frames per second
   Serial.println("sensor initialized!");
 }
 void loop(){
@@ -48,7 +48,7 @@ void loop(){
     if (y<3)Serial.print("~"); 
   }
   Serial.print("\n");
-  delay(100);
+  delay(50);
 };
 
 
