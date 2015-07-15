@@ -11,15 +11,13 @@
  */
 
 import processing.serial.*;
-import java.awt.Color;
 
 Serial serialConnection;
 String sensorReading;
-Color tempColor;
 Double temperatureToString;
 float[][] drawTemperatures2D;
 float[][] temperatures2D;
-double H, S, B;
+float H, S, B;
 boolean waitFirstNewline;
 
 void setup() {
@@ -28,7 +26,6 @@ void setup() {
   sensorReading="";
   serialConnection = new Serial(this, "COM13", 19200);
   serialConnection.bufferUntil('\n');
-  
 }
 
 void serialEvent (Serial serialConnection) {
@@ -53,8 +50,7 @@ void draw() {
     for (int i = 15; i >= 0; i--) {  
       pushMatrix();
       for (int j = 0; j < 4; j++) {
-        tempColor = getColor(((drawTemperatures2D[j][i]-37)/9)); 
-        fill(tempColor.getRGB());
+        fill(getColor(((drawTemperatures2D[j][i]-37)/9)));
         rect(0, 0, 30, 30);
         textSize(10);
         fill(0);
@@ -94,11 +90,12 @@ float[][] parseInput(String input) {
   return temperatures2D;
 }
 
-Color getColor(double power)
+color getColor(float power)
 {
+  colorMode(HSB, 1.0);
   H = (1-power) * 0.4; 
   S = 0.9; 
   B = 0.9; 
-  return Color.getHSBColor((float)H, (float)S, (float)B);
+  
+  return color(H, S, B);
 }
-
