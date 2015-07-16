@@ -8,7 +8,7 @@ In use in VU and Tilburg University temperature [cry detection project](http://w
 
 Implements MaxBot's MLX90621 [Arduino library](http://forum.arduino.cc/index.php?topic=126244.0) patched with KMoto's [minor change](http://forum.arduino.cc/index.php?topic=126244.msg2307588#msg2307588) in defaultConfig_H.
 
-Also makes use of [nox771's i2c_t3 extended Teensy 3 Wire library](https://github.com/nox771/i2c_t3). This library allows a [Teensy 3.1](https://www.pjrc.com/store/teensy31.html) Arduino compatible USB development board to communicate with the MLX90621 over I2C/TWI.
+Also makes use of [nox771's i2c_t3 enhanced Teensy 3 Wire library](https://github.com/nox771/i2c_t3). This library allows a [Teensy 3.1](https://www.pjrc.com/store/teensy31.html) Arduino compatible USB development board to communicate with the MLX90621 over I2C/TWI.
 
 #####Screenshot
 
