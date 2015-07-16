@@ -2,7 +2,7 @@
  *  VisualizeTemperatures.pde
  *
  *  A simple Processing Sketch which listens to a  
- *  Teensy 3.1+ Arduino board connected to a Melexis 90620
+ *  Teensy 3.1+ Arduino board connected to a Melexis MLX90621
  *  and visualizes the temperature values measured by its 
  *  4x16 matrix as a color matrix 
  *
