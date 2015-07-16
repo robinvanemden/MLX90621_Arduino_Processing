@@ -50,7 +50,7 @@ void draw() {
     for (int i = 15; i >= 0; i--) {  
       pushMatrix();
       for (int j = 0; j < 4; j++) {
-        fill(getColor(((drawTemperatures2D[j][i]-37)/9)));
+        fill(getColor(((drawTemperatures2D[j][i]-29)/7)));
         rect(0, 0, 30, 30);
         textSize(10);
         fill(0);
