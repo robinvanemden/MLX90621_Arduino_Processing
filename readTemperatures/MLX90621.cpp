@@ -80,15 +80,23 @@ void MLX90621::setConfiguration() {
 	resolution = (readConfig() & 0x30) >> 4;
 }
 
-void MLX90621::readEEPROM() {
-	Wire.beginTransmission(0x50);
-	Wire.send(0x00);
-	Wire.requestFrom(0x50, 256);
-	for (int i = 0; i <= 255; i++) {
-		eepromData[i] = Wire.read();
-	}
-	Wire.endTransmission();
+void MLX90621::readEEPROM() { // Read in blocks of 32 bytes to accomodate Wire library
+  for(int j=0;j<256;j+=32) {
+    Wire.beginTransmission(0x50);
+    Wire.send(j);
+    byte rc = Wire.endTransmission(I2C_NOSTOP);
+    if(rc) {
+      Serial.print("rdEEPROM: ");
+      Serial.println(rc);
+    }
+    Wire.requestFrom(0x50, 32);
+    for (int i = 0; i < 32; i++) {
+      eepromData[j+i] = Wire.read();
+    }
+  }
 }
+ 
+
 
 void MLX90621::writeTrimmingValue() {
 	Wire.beginTransmission(0x60);
@@ -167,21 +175,25 @@ void MLX90621::calculateTO() {
 	}
 }
 
+
 void MLX90621::readIR() {
-	Wire.beginTransmission(0x60);
-	Wire.send(0x02);
-	Wire.send(0x00);
-	Wire.send(0x01);
-	Wire.send(0x40);
-	Wire.endTransmission(I2C_NOSTOP);
-	Wire.requestFrom(0x60, 128);
-	for (int i = 0; i < 64; i++) {
-		byte pixelDataLow = Wire.read();
-		byte pixelDataHigh = Wire.read();
-		irData[i] = (int16_t) (pixelDataHigh << 8) | pixelDataLow;
-	}
-	Wire.endTransmission();
+  for(int j=0;j<64;j+=16) { // Read in blocks of 32 bytes to overcome Wire buffer limit   
+    Wire.beginTransmission(0x60);
+    Wire.send(0x02);
+    Wire.send(j);
+    Wire.send(0x01);
+    Wire.send(0x20);
+    Wire.endTransmission(I2C_NOSTOP); 
+    Wire.requestFrom(0x60, 32);
+    for (int i = 0; i < 16; i++) {
+      byte pixelDataLow = Wire.read();
+      byte pixelDataHigh = Wire.read();
+      irData[j+i] = (int16_t) (pixelDataHigh << 8) | pixelDataLow;
+    }
+  }
 }
+
+
 
 void MLX90621::readPTAT() {
 	Wire.beginTransmission(0x60);
@@ -193,7 +205,6 @@ void MLX90621::readPTAT() {
 	Wire.requestFrom(0x60, 2);
 	byte ptatLow = Wire.read();
 	byte ptatHigh = Wire.read();
-	Wire.endTransmission();
 	ptat = ((uint16_t) (ptatHigh << 8) | ptatLow);
 }
 
@@ -207,7 +218,6 @@ void MLX90621::readCPIX() {
 	Wire.requestFrom(0x60, 2);
 	byte cpixLow = Wire.read();
 	byte cpixHigh = Wire.read();
-	Wire.endTransmission();
 	cpix = ((int16_t) (cpixHigh << 8) | cpixLow);
 	if (cpix >= 32768)
 		cpix -= 65536;
@@ -223,7 +233,6 @@ uint16_t MLX90621::readConfig() {
 	Wire.requestFrom(0x60, 2);
 	byte configLow = Wire.read();
 	byte configHigh = Wire.read();
-	Wire.endTransmission();
 	uint16_t config = ((uint16_t) (configHigh << 8) | configLow);
 	return config;
 }
