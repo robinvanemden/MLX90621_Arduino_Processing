@@ -27,7 +27,7 @@ import java.util.Arrays;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public static final boolean  WRITE_TO_FILE = false;
+public static final boolean  WRITE_TO_FILE = true;
 
 PrintWriter output;
 Serial serialConnection;
@@ -49,6 +49,8 @@ double[] tempValues1D[];
 PImage img;
 double[][] quadrant = new double[4][16];
 double[][] quadrantLong = new double[4][16];
+boolean spaceCheck = false;
+String pressedSpace = "";
 
 void setup() {
    
@@ -97,10 +99,13 @@ void setup() {
 
 public class GlobalKeyListenerExample implements NativeKeyListener {
   public void nativeKeyPressed(NativeKeyEvent e) {
-    //System.out.println("Key Pressed: " + NativeKeyEvent.getKeyText(e.getKeyCode()));
+    System.out.println("Key Pressed: " + NativeKeyEvent.getKeyText(e.getKeyCode()));
+    if (NativeKeyEvent.getKeyText(e.getKeyCode()) == "Space") {
+      spaceCheck = true;
+    }
   }
   public void nativeKeyReleased(NativeKeyEvent e) {
-    System.out.println("Key Released: " + NativeKeyEvent.getKeyText(e.getKeyCode()));
+    //System.out.println("Key Released: " + NativeKeyEvent.getKeyText(e.getKeyCode()));
   }
   public void nativeKeyTyped(NativeKeyEvent e) {
     //System.out.println("Key Typed: " + NativeKeyEvent  .getKeyText(e.getKeyCode()));
@@ -129,7 +134,14 @@ void draw() {
 
   if (drawTemperatures2D!=null) {
     if (WRITE_TO_FILE) {
-      output.println(sdf.format(new Date())+"~"+sensorReading); 
+
+      if (spaceCheck) {
+          pressedSpace = "1";
+          spaceCheck = false;
+      } else {
+          pressedSpace = "0";
+      }
+      output.println(pressedSpace+"~"+sdf.format(new Date())+"~"+sensorReading); 
       output.flush();
     }
 
@@ -138,8 +150,8 @@ void draw() {
       for (int j = 0; j < 4; j++) {
 
 
-        img.pixels[i+j*16]=getColor(((drawTemperatures2D[j][i]-29)/7));
-        fill(getColor(((drawTemperatures2D[j][i]-29)/7)));
+        img.pixels[i+j*16]=getColor(((drawTemperatures2D[j][i]-33)/7));
+        fill(getColor(((drawTemperatures2D[j][i]-33)/7)));
         rect(0, 0, 30, 30);
         textSize(10);
         fill(0);
@@ -203,9 +215,9 @@ void draw() {
           RB++;
         }
         double nowValue = longValue - shortValue;
-        if (nowValue<-0.8) { 
+        if (nowValue<-0.4) { 
           fill(#FF0000);
-        } else if (nowValue>0.8) { 
+        } else if (nowValue>0.4) { 
           fill(#0000FF);
         } else { 
           fill(#AAAAAA);
@@ -213,7 +225,7 @@ void draw() {
         rect(0, 0, 30, 30);
         textSize(10);
         fill(0);
-        temperatureToString = (double) Math.round(nowValue * 10) / 10;
+        temperatureToString = -(double) Math.round(nowValue * 10) / 10;
         text(temperatureToString.toString(), 4, 20);
         translate(0, 40);
       }
@@ -226,7 +238,7 @@ void draw() {
   if (drawTemperatures2D!=null) {
     pushMatrix();
     for (int j = 0; j < 4; j++) {
-      fill(getColor(((mean(quadrant[j])-29)/7)));
+      fill(getColor(((mean(quadrant[j])-33)/7)));
       rect(0, 0, 70, 70);
       textSize(10);
       fill(0);
@@ -244,9 +256,9 @@ void draw() {
     pushMatrix();
     for (int j = 0; j < 4; j++) {
       double averagedValues = (mean(quadrantLong[j]) - mean(quadrant[j]));
-      if (averagedValues<-0.4) { 
+      if (averagedValues<-0.2) { 
         fill(#FF0000);
-      } else if (averagedValues>0.4) { 
+      } else if (averagedValues>0.2) { 
         fill(#0000FF);
       } else { 
         fill(#AAAAAA);
@@ -254,7 +266,7 @@ void draw() {
       rect(0, 0, 70, 70);
       textSize(10);
       fill(0);
-      temperatureToString = (double) Math.round(averagedValues * 10) / 10;
+      temperatureToString = -(double) Math.round(averagedValues * 10) / 10;
       text(temperatureToString.toString(), 4, 20);
       if (j==0)translate(-80, 0);
       if (j==1)translate(80, 80);
