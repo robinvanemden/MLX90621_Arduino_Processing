@@ -12,7 +12,7 @@ Implements MaxBot's MLX90621 [Arduino library](http://forum.arduino.cc/index.php
 
 Also makes use of [nox771's i2c_t3 enhanced Teensy 3 Wire library](https://github.com/nox771/i2c_t3). This library allows a [Teensy 3.1](https://www.pjrc.com/store/teensy31.html) Arduino compatible USB development board to communicate with the MLX90621 over I2C/TWI.
 
-TODO 2015-10-25: Refactor Processing visualizer.
+TODO 2015-10-25: Refactor and clean up Processing visualizer.
 
 #####Screenshot
 
