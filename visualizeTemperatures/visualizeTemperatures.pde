@@ -6,6 +6,11 @@
  *  and visualizes the temperature values measured by its 
  *  4x16 matrix as a color matrix 
  *
+ *  WARNING!
+ *  Per 11.10.2015 this script was adapted through quick and dirty copy and paste programming.
+ *  This enabled me to demonstrate, and make use of, some alternative visualisations during measurement.
+ *  The resulting code needs to be cleaned up and refactored.
+ *
  *  Created on: 9.7.2015
  *      Author: Robin van Emden
  */
